@@ -4772,9 +4772,9 @@
         // Check for separate input/output orientation, fallback to general horizontal property
         var is_horizontal = false;
         if (is_input) {
-            is_horizontal = this.inputs_horizontal !== undefined ? this.inputs_horizontal : this.horizontal;
+            is_horizontal = this.inputs_horizontal !== undefined && this.inputs_horizontal !== null ? this.inputs_horizontal : this.horizontal;
         } else {
-            is_horizontal = this.outputs_horizontal !== undefined ? this.outputs_horizontal : this.horizontal;
+            is_horizontal = this.outputs_horizontal !== undefined && this.outputs_horizontal !== null ? this.outputs_horizontal : this.horizontal;
         }
 
         if (this.flags.collapsed) {
@@ -7067,7 +7067,7 @@ LGraphNode.prototype.executeAction = function(action)
                 var input = node.inputs[i];
                 var link_pos = node.getConnectionPos(true, i);
                 var is_inside = false;
-                var inputs_horizontal = node.inputs_horizontal !== undefined ? node.inputs_horizontal : node.horizontal;
+                var inputs_horizontal = node.inputs_horizontal !== undefined && node.inputs_horizontal !== null ? node.inputs_horizontal : node.horizontal;
                 if (inputs_horizontal) {
                     is_inside = isInsideRectangle(
                         canvasx,
@@ -7114,7 +7114,7 @@ LGraphNode.prototype.executeAction = function(action)
                 var output = node.outputs[i];
                 var link_pos = node.getConnectionPos(false, i);
                 var is_inside = false;
-                var outputs_horizontal = node.outputs_horizontal !== undefined ? node.outputs_horizontal : node.horizontal;
+                var outputs_horizontal = node.outputs_horizontal !== undefined && node.outputs_horizontal !== null ? node.outputs_horizontal : node.horizontal;
                 if (outputs_horizontal) {
                     is_inside = isInsideRectangle(
                         canvasx,
@@ -7965,11 +7965,11 @@ LGraphNode.prototype.executeAction = function(action)
 				if(connDir == null)
 				{
 					if (this.connecting_output) {
-						var outputs_horizontal = this.connecting_node.outputs_horizontal !== undefined ? 
+						var outputs_horizontal = this.connecting_node.outputs_horizontal !== undefined && this.connecting_node.outputs_horizontal !== null ? 
 							this.connecting_node.outputs_horizontal : this.connecting_node.horizontal;
 						connDir = outputs_horizontal ? LiteGraph.DOWN : LiteGraph.RIGHT;
 					} else {
-						var inputs_horizontal = this.connecting_node.inputs_horizontal !== undefined ? 
+						var inputs_horizontal = this.connecting_node.inputs_horizontal !== undefined && this.connecting_node.inputs_horizontal !== null ? 
 							this.connecting_node.inputs_horizontal : this.connecting_node.horizontal;
 						connDir = inputs_horizontal ? LiteGraph.UP : LiteGraph.LEFT;
 					}
@@ -8604,8 +8604,8 @@ LGraphNode.prototype.executeAction = function(action)
         var size = temp_vec2;
         temp_vec2.set(node.size);
         var horizontal = node.horizontal; // || node.flags.horizontal;
-        var inputs_horizontal = node.inputs_horizontal !== undefined ? node.inputs_horizontal : horizontal;
-        var outputs_horizontal = node.outputs_horizontal !== undefined ? node.outputs_horizontal : horizontal;
+        var inputs_horizontal = node.inputs_horizontal !== undefined && node.inputs_horizontal !== null ? node.inputs_horizontal : horizontal;
+        var outputs_horizontal = node.outputs_horizontal !== undefined && node.outputs_horizontal !== null ? node.outputs_horizontal : horizontal;
 
         if (node.flags.collapsed) {
             ctx.font = this.inner_text_font;
@@ -8929,7 +8929,7 @@ LGraphNode.prototype.executeAction = function(action)
                 var x = 0;
                 var y = LiteGraph.NODE_TITLE_HEIGHT * -0.5; //center
                 // For collapsed nodes, use inputs_horizontal if available, otherwise fall back to general horizontal
-                var input_is_horizontal = node.inputs_horizontal !== undefined ? node.inputs_horizontal : horizontal;
+                var input_is_horizontal = node.inputs_horizontal !== undefined && node.inputs_horizontal !== null ? node.inputs_horizontal : horizontal;
                 if (input_is_horizontal) {
                     x = node._collapsed_width * 0.5;
                     y = -LiteGraph.NODE_TITLE_HEIGHT;
@@ -8956,7 +8956,7 @@ LGraphNode.prototype.executeAction = function(action)
                 var x = node._collapsed_width;
                 var y = LiteGraph.NODE_TITLE_HEIGHT * -0.5; //center
                 // For collapsed nodes, use outputs_horizontal if available, otherwise fall back to general horizontal
-                var output_is_horizontal = node.outputs_horizontal !== undefined ? node.outputs_horizontal : horizontal;
+                var output_is_horizontal = node.outputs_horizontal !== undefined && node.outputs_horizontal !== null ? node.outputs_horizontal : horizontal;
                 if (output_is_horizontal) {
                     x = node._collapsed_width * 0.5;
                     y = 0;
@@ -9461,12 +9461,12 @@ LGraphNode.prototype.executeAction = function(action)
                 }
                 var start_dir =
                     start_slot.dir ||
-                    (start_node.outputs_horizontal !== undefined ? 
+                    (start_node.outputs_horizontal !== undefined && start_node.outputs_horizontal !== null ? 
                         (start_node.outputs_horizontal ? LiteGraph.DOWN : LiteGraph.RIGHT) :
                         (start_node.horizontal ? LiteGraph.DOWN : LiteGraph.RIGHT));
                 var end_dir =
                     end_slot.dir ||
-                    (node.inputs_horizontal !== undefined ?
+                    (node.inputs_horizontal !== undefined && node.inputs_horizontal !== null ?
                         (node.inputs_horizontal ? LiteGraph.UP : LiteGraph.LEFT) :
                         (node.horizontal ? LiteGraph.UP : LiteGraph.LEFT));
 
